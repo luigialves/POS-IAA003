@@ -14,7 +14,7 @@ data(Satellite)
 
 df <- Satellite[c(17:20, 37)]
 
-set.seed(7)
+set.seed(10)
 
 indices <- createDataPartition(df$classes, p = 0.80, list = FALSE)
 
@@ -27,27 +27,27 @@ df.teste <- df[-indices,]
 
 rf <- train(classes~., data=df.treino, method="rf")
 predicoes.rf <- predict(rf, df.teste)
-predicoes.rf
 cm.rf <- confusionMatrix(predicoes.rf, df.teste$classes)
-cm.rf # Accuracy : 0.8395
 
 #### SVM ####
 
 svm <- train(classes~., data=df.treino, method="svmRadial")
 predicoes.svm <- predict(svm, df.teste)
 cm.svm <- confusionMatrix(predicoes.svm, df.teste$classes)
-cm.svm # Accuracy : 0.8679
 
 #### RNA ####
 
 rna <- train(classes~., data=df.treino, method="nnet", trace=FALSE)
-precicoes.rna <- predict(rna, df.teste)
-cm.rna <- confusionMatrix(predicoes.rf, df.teste$classes)
-cm.rna # Accuracy : 0.8395 
+predicoes.rna <- predict(rna, df.teste)
+cm.rna <- confusionMatrix(predicoes.rna, df.teste$classes)
 
 # 4. Escolha o melhor modelo com base em suas matrizes de confusão
 
-
+cm.rf # Accuracy : 0.838
+cm.svm # Accuracy : 0.852
+cm.rna # Accuracy : 0.771
 
 # 5. Indique qual modelo dá o melhor resultado e a métrica utilizada
 
+# O melhor modelo é do SVM, que apresenta uma acurácia de 85%, 
+# enquanto o Random Forest apresenta 83% e por último o RNA com 77%
